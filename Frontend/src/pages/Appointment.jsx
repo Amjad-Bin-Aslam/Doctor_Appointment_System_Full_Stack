@@ -1,9 +1,59 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
+import { assets } from '../assets/assets'
 
 const Appointment = () => {
-  return (
+
+  const { docId } = useParams()
+  const { doctors } =  useContext(AppContext)
+  const [docInfo , setDocInfo] = useState()
+
+
+  const fetchDocInfo = async () => {
+
+    const docInfo = doctors.find(doc => doc._id === docId)
+    setDocInfo(docInfo)
+    console.log(docInfo)
+
+  }
+
+
+  useEffect(()=>{
+    fetchDocInfo();
+  } ,[doctors , docId])
+   
+
+  return docInfo && (
     <div>
-      Hlooooo
+      
+    {/* Doctors Detail */}
+    <div className='flex flex-col sm:flex-row gap-4'>
+
+      <div>
+        <img src={docInfo.image} alt="" />
+      </div>
+
+      <div>
+        {/*docInfo like name degree and experice  */}
+        <p> {docInfo.name}
+           <img src={assets.verified_icon} alt="" /> 
+        </p>
+        <div>
+          <p> {docInfo.degree} - {docInfo.speciality} </p>
+          <button> {docInfo.experience} </button>
+        </div>
+
+        {/* Doctor About */}
+        <div>
+          <p>About 
+            <img src={assets.info_icon} alt="" />
+          </p>
+          <p> {docInfo.about} </p>
+        </div>
+      </div>
+    </div>
+
     </div>
   )
 }
