@@ -85,7 +85,10 @@ const getProfile = async (req, res) => {
 
     try {
 
-        const { userId } = req.body;
+        // const { userId } = req.body;
+
+        // added from gpt
+        const userId = req.user.id;
 
         const userData = await userModel.findById(userId).select('-password')
 
@@ -117,7 +120,7 @@ const updateProfile = async (req, res) => {
         if (imageFile) {
 
             //upload image at cloudinary
-            const uploadImage = cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' })
+            const uploadImage = await cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' })
             // get image url from cloudinary and save to the database
             const imageUrl = uploadImage.secure_url
 
@@ -127,7 +130,7 @@ const updateProfile = async (req, res) => {
         res.json({ success: true , message: "Profile Updated." })
 
 
-
+    
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

@@ -9,7 +9,7 @@ export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
 
-
+ 
     const currencySymbol = '$'
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     
@@ -53,9 +53,7 @@ const AppContextProvider = (props) => {
 
     }
 
-    useEffect(()=>{
-        getDoctorsData()
-    }, [])
+    
 
     useEffect(()=>{
         if(token){
@@ -72,6 +70,10 @@ const AppContextProvider = (props) => {
         loadUserProfileData,
 
     }
+
+    useEffect(()=>{
+        getDoctorsData()
+    }, [])
 
     return (
         <AppContext.Provider value={value} >
