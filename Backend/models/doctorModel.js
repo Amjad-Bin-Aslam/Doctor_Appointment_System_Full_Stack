@@ -20,6 +20,6 @@ const doctorSchem = new mongoose.Schema({
 
 
 const doctorModel = mongoose.models.doctor ||  mongoose.model('doctor' , doctorSchem)
-
+ 
 
 export default doctorModel;

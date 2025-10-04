@@ -11,7 +11,7 @@ const userSchem = new mongoose.Schema({
     dob: { type: String , default: "Not selected" },
     phone: { type: Number , default: "00000000000" }
 
-})
+}) 
 
 
 const userModel = mongoose.models.user || mongoose.model("user" , userSchem)
