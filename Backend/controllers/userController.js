@@ -102,14 +102,15 @@ const getProfile = async (req, res) => {
 }
 
 
-
+ 
 // update user profile
 const updateProfile = async (req, res) => {
 
     try {
 
-        const { userId, name, phone, address, dob, gender } = req.body;
+        const { name, phone, address, dob, gender } = req.body;
         const imageFile = req.file;
+        const userId = req.user.id;
 
         if (!name || !phone || !dob || !gender) {
             return res.json({ success: false, message: "Missing details." })
@@ -117,20 +118,38 @@ const updateProfile = async (req, res) => {
 
         await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
 
+        // if (imageFile) {
+
+        //     //upload image at cloudinary
+        //     const uploadImage = await cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' })
+        //     // get image url from cloudinary and save to the database
+        //     const imageUrl = uploadImage.secure_url
+
+        //     await userModel.findByIdAndUpdate(userId , { image: imageUrl })
+        // }
+
+        // from gpt
         if (imageFile) {
+            try {
+                const uploadImage = await cloudinary.uploader.upload(imageFile.path, {
+                    resource_type: 'image',
+                    timeout: 60000 // optional: 60 sec timeout
+                });
 
-            //upload image at cloudinary
-            const uploadImage = await cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' })
-            // get image url from cloudinary and save to the database
-            const imageUrl = uploadImage.secure_url
+                const imageUrl = uploadImage.secure_url;
 
-            await userModel.findByIdAndUpdate(userId , { image: imageUrl })
+                await userModel.findByIdAndUpdate(userId, { image: imageUrl });
+            } catch (uploadErr) {
+                console.error("Cloudinary upload failed:", uploadErr);
+                return res.json({ success: false, message: "Image upload failed, please try again." });
+            }
         }
+ 
+ 
+        res.json({ success: true, message: "Profile Updated." })
 
-        res.json({ success: true , message: "Profile Updated." })
 
 
-    
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

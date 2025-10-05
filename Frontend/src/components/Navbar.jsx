@@ -5,7 +5,7 @@ import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
 
-  const { token, setToken } = useContext(AppContext)
+  const { token, setToken, userData } = useContext(AppContext)
 
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
@@ -44,12 +44,12 @@ const Navbar = () => {
 
       {/* Right Side */}
       <div className='flex items-center gap-4'>
-        {token ? (
+        {token && userData ? (
           <div className='flex items-center gap-2 cursor-pointer relative'>
             {/* Profile & dropdown toggle */}
             <img
               className='w-8 rounded-full'
-              src={assets.profile_pic}
+              src={userData.image ? userData.image : assets.profile_pic}
               alt=''
               onClick={() => setShowDropdown((prev) => !prev)}
             />
