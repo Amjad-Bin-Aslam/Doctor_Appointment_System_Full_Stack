@@ -5,6 +5,9 @@ import jwt from 'jsonwebtoken'
 import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 // create the new user
 const registerUser = async (req, res) => {
@@ -279,6 +282,89 @@ const cancelAppointments = async (req , res) => {
 }
 
 
+// payment method for stripe
+const bookAppointmentStripe = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const { origin } = req.headers;
+
+    // Get existing appointment
+    const appointment = await appointmentModel.findById(appointmentId);
+    if (!appointment) {
+      return res.json({ success: false, message: "Appointment not found." });
+    }
+
+    // Get doctor data
+    const docData = await doctorModel.findById(appointment.docId);
+    if (!docData) {
+      return res.json({ success: false, message: "Doctor not found." });
+    }
+
+    // Create Stripe Checkout session
+    const line_items = [
+      {
+        price_data: {
+          currency: process.env.CURRENCY.toLowerCase(),
+          product_data: { name: `Appointment with Dr. ${docData.name}` },
+          unit_amount: appointment.amount * 100,
+        },
+        quantity: 1,
+      },
+    ];
+
+    const session = await stripe.checkout.sessions.create({
+      success_url: `${origin}/verify?success=true&appointmentId=${appointment._id}`,
+      cancel_url: `${origin}/verify?success=false&appointmentId=${appointment._id}`,
+      line_items,
+      mode: "payment",
+    });
+
+    res.json({ success: true, session_url: session.url });
+  } catch (error) {
+    console.log("Stripe appointment error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
+
+// verify stripe
+const verifyStripeAppointment = async (req, res) => {
+  try {
+    const { appointmentId, success } = req.body;
+    const userId = req.user.id;
+
+    if (success === true || success === "true") {
+      // Mark payment as done
+      await appointmentModel.findByIdAndUpdate(appointmentId, { payment: true });
+
+      // Block doctor’s slot
+      const appointment = await appointmentModel.findById(appointmentId);
+      const { docId, slotDate, slotTime } = appointment;
+
+      const doctorData = await doctorModel.findById(docId);
+      let slots_booked = doctorData.slots_booked;
+
+      if (!slots_booked[slotDate]) slots_booked[slotDate] = [];
+      slots_booked[slotDate].push(slotTime);
+
+      await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+
+      res.json({ success: true, message: "Appointment confirmed and paid." });
+    } else {
+      //  Delete unpaid appointment
+      await appointmentModel.findByIdAndDelete(appointmentId);
+      res.json({ success: false, message: "Payment failed or cancelled." });
+    }
+  } catch (error) {
+    console.log("Verify Stripe Appointment Error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
+
+
 export {
     registerUser,
     loginUser,
@@ -287,4 +373,8 @@ export {
     bookAppointment, 
     listAppointment,
     cancelAppointments,
+    bookAppointmentStripe,
+    verifyStripeAppointment,
 }
+
+
