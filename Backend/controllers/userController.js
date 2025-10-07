@@ -319,7 +319,7 @@ const bookAppointmentStripe = async (req, res) => {
       mode: "payment",
     });
 
-    res.json({ success: true, session_url: session.url });
+    res.json({ success: true, session_url: session.url, session });
   } catch (error) {
     console.log("Stripe appointment error:", error);
     res.json({ success: false, message: error.message });
