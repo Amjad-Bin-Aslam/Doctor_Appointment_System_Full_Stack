@@ -92,7 +92,6 @@ const getProfile = async (req, res) => {
 
         // const { userId } = req.body;
 
-        // added from gpt
         const userId = req.user.id;
 
         const userData = await userModel.findById(userId).select('-password')
