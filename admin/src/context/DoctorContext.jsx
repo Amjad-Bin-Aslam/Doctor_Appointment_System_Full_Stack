@@ -11,6 +11,8 @@ const DoctorContextProvider = (props) => {
 
     const [dToken, setDToken] = useState(localStorage.getItem('dToken')? localStorage.getItem('dToken'): '')
     const [appointments, setAppointments] = useState([])
+    const [dashData, setDashDat] = useState(false)
+    const [profileData , setProfileData] = useState(false)
 
     const getAppointments = async () => {
 
@@ -19,7 +21,7 @@ const DoctorContextProvider = (props) => {
             const { data } = await axios.get(backendUrl + '/api/doctor/appointments', {headers: {dToken}}) 
 
             if(data.success){
-                setAppointments(data.appointments.reverse())
+                setAppointments(data.appointments)
                 console.log(data.appointments)
                 console.log(data)
             } else {
@@ -32,6 +34,7 @@ const DoctorContextProvider = (props) => {
         }
 
     }
+
 
 
     const completeAppointment = async (appointmentId) => {
@@ -55,6 +58,7 @@ const DoctorContextProvider = (props) => {
     }
 
 
+
     const cancelAppointment = async (appointmentId) => {
 
         try {
@@ -74,12 +78,57 @@ const DoctorContextProvider = (props) => {
     }
 
 
+
+    const getDashData = async () => {
+
+        try {
+            
+            const {data} = await axios.get(backendUrl + '/api/doctor/dashboard', {headers: {dToken}})
+
+            if(data.success){
+                setDashDat(data.dashData)
+                console.log(data.dashData)
+            }else{
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+
+    }
+
+
+
+    const getProfileData = async () => {
+
+        try {
+            
+            const {data} = await axios.get(backendUrl + '/api/doctor/profile', {headers: {dToken}})
+
+            if(data.success){
+                setProfileData(data.doctorProfile)
+                console.log(data.doctorProfile)
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+
+    }
+
     const value = {
         backendUrl, dToken, setDToken,
         getAppointments,appointments,
         setAppointments,
         cancelAppointment,
         completeAppointment,
+        getDashData,setDashDat,dashData,
+        getProfileData,profileData,setProfileData
     }
 
     return (

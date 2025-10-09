@@ -140,6 +140,84 @@ const appointmentCancel = async (req , res) => {
 
 
 
+// api to get dashboard data for doctor panel
+const doctorDashboard = async (req , res) => {
+
+    try {
+        
+        const docId = req.doctor.id
+        const appointments = await appointmentModel.find({docId})
+
+        let earning = 0;
+        appointments.map((item)=> {
+            if(item.isCompleted || item.cancelled){
+                earning += item.amount
+            }
+        })
+
+        let patients = [];
+        appointments.map((item)=>{
+            if(!patients.includes(item.userId)){
+                patients.push(item.userId)
+            }
+        })
+
+        const dashData = {
+            earning,
+            appointments: appointments.length,
+            patients: patients.length,
+            latestAppointment: appointments.reverse().slice(0,5)
+        }
+
+        res.json({ success: true, dashData })
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
+
+
+// api to get doctor profile for doctor panel
+const doctorProfile = async (req, res)=> {
+
+    try {
+        
+        const docId = req.doctor.id
+        const doctorProfile = await doctorModel.findById(docId).select('-password')
+
+        res.json({ success: true, doctorProfile })
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
+
+
+// api to update doctor profile data from doctor panel
+const updateDoctorProfile = async (req, res) => {
+
+    try {
+        
+        const { fees, address, available } = req.body;
+        const docId = req.doctor.id;
+
+        await doctorModel.findByIdAndUpdate(docId, { fees, address, available })
+
+        res.json({ success: true, message: "Profile Updated." })
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
 
 export {
     changeAvailability,
@@ -148,4 +226,7 @@ export {
     appointmentsDoctor,
     appointmentComplete,
     appointmentCancel,
+    doctorDashboard,
+    doctorProfile,
+    updateDoctorProfile,
 };

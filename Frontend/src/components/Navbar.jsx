@@ -11,7 +11,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const logout =  async () => {
+  const logout = async () => {
     setToken(false)
     localStorage.removeItem('token')
   }
@@ -27,7 +27,7 @@ const Navbar = () => {
       />
 
       {/* Desktop Menu */}
-      <ul className='hidden md:flex items-start gap-5 font-medium'>
+      {/* <ul className='hidden md:flex items-start gap-5 font-medium'>
         <NavLink to='/'>
           <li className='py-1'>Home</li>
         </NavLink>
@@ -40,7 +40,37 @@ const Navbar = () => {
         <NavLink to='/contact'>
           <li className='py-1'>Contact</li>
         </NavLink>
+      </ul> */}
+
+      <ul className="hidden md:flex items-start gap-6 font-medium relative">
+        {[
+          { to: '/', label: 'Home' },
+          { to: '/doctors', label: 'All Doctors' },
+          { to: '/about', label: 'About' },
+          { to: '/contact', label: 'Contact' },
+        ].map((link, i) => (
+          <NavLink
+            key={i}
+            to={link.to}
+            className={({ isActive }) =>
+              `relative flex flex-col items-center gap-1 text-sm transition-all duration-300 ${isActive ? 'text-[#5f6FFF]' : 'text-gray-700'
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <p className="py-1">{link.label}</p>
+                <span
+                  className={`absolute bottom-0 left-0 h-[2px] w-full bg-[#5f6FFF] rounded-full transition-all duration-500 ease-in-out ${isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+                    }`}
+                  style={{ transformOrigin: 'center' }}
+                ></span>
+              </>
+            )}
+          </NavLink>
+        ))}
       </ul>
+
 
       {/* Right Side */}
       <div className='flex items-center gap-4'>
@@ -86,7 +116,7 @@ const Navbar = () => {
                     className='hover:text-black cursor-pointer'
                     onClick={() => {
                       logout(),
-                      setShowDropdown(false);
+                        setShowDropdown(false);
                     }}
                   >
                     Logout
@@ -114,9 +144,8 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`${
-            showMenu ? 'fixed w-full' : 'h-0 w-0'
-          } md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}
+          className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'
+            } md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}
         >
           <div className='flex items-center justify-between px-5 py-6'>
             <img className='w-36' src={assets.logo} alt='' />

@@ -11,9 +11,9 @@
   font-family: Outfit;
 }
 
-.active hr{
+/* .active hr{
  @apply block
-}
+} */
 
 
 ::-webkit-scrollbar{
@@ -21,8 +21,8 @@
 }
 
 
-@media (max-width: 740px) {
-  .active p{
+/* @media (max-width: 740px) {
+  .active p{ 
     @apply text-white bg-[#5f6FFF]
   }
-}
+} */

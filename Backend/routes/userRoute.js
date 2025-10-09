@@ -18,7 +18,7 @@ userRouter.post('/cancel-appointment', authUser, cancelAppointments)
 
 
 // payment
-userRouter.post('/book-appointment-strip', authUser, bookAppointmentStripe)
+userRouter.post('/book-appointment-stripe', authUser, bookAppointmentStripe)
 userRouter.post('/verify-stripe-appointment', authUser,verifyStripeAppointment ) 
 
 
