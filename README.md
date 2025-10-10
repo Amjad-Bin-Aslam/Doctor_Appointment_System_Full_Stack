@@ -11,6 +11,18 @@
 
 ---
 
+## 📬 Contact
+
+Developer: Muhammad Amjad
+
+Email: amjadbinaslam604@gmail.com
+
+LinkedIn: https://www.linkedin.com/in/amjad-bin-aslam-58813530b
+
+GitHub: https://github.com/Amjad-Bin-Aslam
+
+---
+
 ## 📖 Project Description
 
 This project is a **Doctor Appointment Booking System** built using **MongoDB, Express.js, React.js, Node.js, and Tailwind CSS**, integrated with **Stripe** for online payments.  
@@ -75,6 +87,13 @@ This project helped me understand:
 - Managing global state using React Context API  
 - Building **responsive layouts** using Tailwind CSS  
 - Designing a clean and user-friendly admin dashboard  
+
+---
+
+## 🙏 Acknowledgment
+
+I would like to express my sincere gratitude to **Muhammad Aqib**, my mentor, for his valuable guidance and constant encouragement during the development of this project.  
+His mentorship helped me understand advanced **MERN concepts**, project structuring, and industry-level development practices.
 
 ---
 
