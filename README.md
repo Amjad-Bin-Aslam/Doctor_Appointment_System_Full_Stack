@@ -23,7 +23,8 @@ The **backend** is powered by **Express.js** and **Node.js**, with a **MongoDB**
 The **frontend** and **admin/doctor panels** are built in **React.js**, styled with **Tailwind CSS** for a modern, responsive UI.
 
 🔗 **Live Demo / Repository:**  
-[👉 View on GitHub](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack)
+<!-- [👉 View on GitHub](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack) -->
+[View on Github](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack)
 
 ---
 
