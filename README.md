@@ -35,6 +35,7 @@ The **frontend** and **admin/doctor panels** are built in **React.js**, styled w
 - Book and cancel appointments  
 - Pay securely using **Stripe**  
 - View personal appointment history  
+- Can edit their profile
 
 ### 🧑‍⚕️ Doctor Panel (Inside Admin)
 - Login and manage personal information  
