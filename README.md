@@ -76,18 +76,26 @@ This project helped me understand:
 
 ---
 
-## 🙏 Acknowledgment
-
-I would like to express my heartfelt gratitude to **Muhammad Aqib**, my mentor, for his continuous guidance, encouragement, and valuable insights throughout this project.  
-His mentorship played a key role in helping me understand advanced MERN concepts and complete this full-featured appointment system successfully.
-
----
-
 ## 📸 Screenshot
 
-![App Screenshot](./assets/homepage.png)
-![App Screenshot](./assets/doctor_dashboard.png)
-![App Screenshot](./assets/admin_panel.png)
+![App Screenshot](./Frontend//src/assets/ScreenShot/Home_page.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/All_doctors_page.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/About_page.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Contact_page.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Create_user.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/User_login.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/User_appointments.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/User_profile.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Admin_login.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Admin_dashboard.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Admin_appointments.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Doctor_list_admin.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Add_doctor.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Doctor_login.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Doctor_dashboard.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Doctor_appointments.png)
+![App Screenshot](./Frontend/src/assets/ScreenShot/Doctor_profile.png)
+
 
 ---
 
