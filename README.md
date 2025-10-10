@@ -24,7 +24,7 @@ The **frontend** and **admin/doctor panels** are built in **React.js**, styled w
 
 🔗 **Live Demo / Repository:**  
 <!-- [👉 View on GitHub](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack) -->
-[View on Github](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack)
+[👉 View on Github](https://github.com/Amjad-Bin-Aslam/Doctor_Appointment_System_Full_Stack)
 
 ---
 
